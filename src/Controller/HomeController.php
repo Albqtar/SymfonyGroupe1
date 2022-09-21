@@ -31,12 +31,12 @@ class HomeController extends AbstractController
     public function afficherDossier($nomDuDossier): Response{
         //vérifier si le dossier existe
         $fs=new Filesystem();
-        $chemin="..Public/Photos/".$nomDuDossier;
+        $chemin="../public/Photos/".$nomDuDossier;
         //s'il n'existe pas, je lève une erreur 404
         if(!$fs->exists($chemin))
             throw $this->createNotFoundException("Le Dossier $nomDuDossier n'existe pas");
         return $this->render('home/afficherDossier.html.twig', [
-            "dossiers"=>$nomDuDossier
+            "nomDuDossier"=>$nomDuDossier
             ]);
     }
 }
