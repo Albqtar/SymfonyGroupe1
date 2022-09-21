@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,8 +14,11 @@ class MenuController extends AbstractController
      */
     public function _menu(): Response
     {
+        $finder=new Finder();
+        $finder->directories()->in("../public/Photos");
+
         return $this->render('menu/_menu.html.twig', [
-            'controller_name' => 'MenuController',
+            "dossiers"=>$finder
         ]);
     }
 }

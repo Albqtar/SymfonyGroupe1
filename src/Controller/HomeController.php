@@ -6,6 +6,8 @@ use ContainerJfbSxm2\getRedirectControllerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,12 +18,19 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
+        //Ajouter un formulaire pour créer un nouveau dossier de chatons
+
+        $form = $this->createFormBuilder() //je récupère un constructeur de formulaire
+                ->add("dossier",TextType::class, ["label"=>"Nom du dossier à créer"])
+            ->add("ok",SubmitType::class, ["label"=>"OK"])
+            ->getForm(); // je récupère une instance de formulaire crée par le builder à la fin
         //Constituer le modèle à transmettre à la vue
         $finder=new Finder();
         $finder->directories()->in("../public/Photos");
         //je transmets le modèle à la vue
         return $this->render('home/index.html.twig', [
-            "dossiers"=>$finder
+            "dossiers"=>$finder,
+            "formulaire"=>$form->createView()
         ]);
     }
     /**
