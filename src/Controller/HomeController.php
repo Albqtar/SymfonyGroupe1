@@ -16,7 +16,7 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        //Consituer le modèle à transmettre à la vue
+        //Constituer le modèle à transmettre à la vue
         $finder=new Finder();
         $finder->directories()->in("../public/Photos");
         //je transmets le modèle à la vue
@@ -35,8 +35,17 @@ class HomeController extends AbstractController
         //s'il n'existe pas, je lève une erreur 404
         if(!$fs->exists($chemin))
             throw $this->createNotFoundException("Le Dossier $nomDuDossier n'existe pas");
+
+        $fichierdansledossier=new Finder();
+        $fichierdansledossier->files()->in("../public/Photos/".$nomDuDossier);
+
+
         return $this->render('home/afficherDossier.html.twig', [
-            "nomDuDossier"=>$nomDuDossier
+            "nomDuDossier"=>$nomDuDossier,
+            "fichierdansledossier"=>$fichierdansledossier
             ]);
+
+
+
     }
 }

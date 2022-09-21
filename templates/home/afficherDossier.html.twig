@@ -12,8 +12,14 @@
     {% endblock %}
 
 {% block body %}
-    <div class="container">
+
     <h1>Dossier {{ nomDuDossier }}</h1>
-        Le dossier Photos contient :
+    <div class="row">
+        Le dossier Photos contient :{% for f in fichierdansledossier %}
+            {% include "home/_chaton.html.twig"%}
+
+        {%  endfor %}
     </div>
+
+
 {% endblock %}
